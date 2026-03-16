@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { Movie } from "../types/movie";
+import type { TMDBResponse } from "../types/movie";
 
 const instance = axios.create({
   baseURL: "https://api.themoviedb.org/3",
@@ -8,17 +8,17 @@ const instance = axios.create({
   },
 });
 
-interface TMDBResponse {
-  results: Movie[];
-}
-
-export const fetchMovies = async (query: string): Promise<Movie[]> => {
+export const fetchMovies = async (
+  query: string,
+  page: number,
+): Promise<TMDBResponse> => {
   const { data } = await instance.get<TMDBResponse>("/search/movie", {
     params: {
       query,
+      page,
       include_adult: false,
       language: "en-US",
     },
   });
-  return data.results;
+  return data;
 };
