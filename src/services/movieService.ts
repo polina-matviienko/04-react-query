@@ -1,5 +1,12 @@
 import axios from "axios";
-import type { TMDBResponse } from "../types/movie";
+import type { Movie } from "../types/movie";
+
+export interface TMDBResponse {
+  page: number;
+  results: Movie[];
+  total_pages: number;
+  total_results: number;
+}
 
 const instance = axios.create({
   baseURL: "https://api.themoviedb.org/3",
@@ -20,5 +27,6 @@ export const fetchMovies = async (
       language: "en-US",
     },
   });
+
   return data;
 };
